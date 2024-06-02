@@ -18,4 +18,4 @@ const QuestionSchema = mongoose.Schema({
     }]
 });
 
-export default mongoose.model("Question",QuestionSchema)
+export default mongoose.model("Question",QuestionSchema);

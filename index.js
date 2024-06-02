@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 //custom imports
 import userRouter from "./Router/user.router.js";
 import quesRouter from "./Router/question.router.js"
+import ansRouter from "./Router/answer.router.js"
 
 //config and middleware
 const app =express();
@@ -19,7 +20,8 @@ app.use(cors())
 
 //routes 
 app.use("/user",userRouter);
-app.use("/question",quesRouter)
+app.use("/question",quesRouter);
+app.use("/answer",ansRouter);
 
 
 //db connection
