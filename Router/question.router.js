@@ -12,4 +12,4 @@ router.post("/ask-ques",auth,askQues);
 router.delete("/delete/:id",auth,deleteQues);
 router.patch("/vote/:id",auth,voteQues);
 
-export default router
+export default router;

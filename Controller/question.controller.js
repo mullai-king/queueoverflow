@@ -1,20 +1,21 @@
 import mongoose from "mongoose"
 import Question from "../Model/questionModel.js";
 
-export const getQues = async(req,res)=>{
+export const askQues = async(req,res)=>{
+    const postQuestionData = req.body;
+    const userId = req.userId;
+    const postQuestion =new Question({...postQuestionData,userPosted:userId});
+    //console.log(userId,postQuestionData,postQuestion)
     try {
-        const postQuestionData = req.body;
-        const userId = req.userId;
-        const postQuestion =new Question({...postQuestionData,userId});
         await postQuestion.save();
         res.status(200).json("Posted a Question");
     } catch (error) {
         console.log(error.message);
-        res.status(409).json({message:"couldn't post.."})
+        res.status(409).json({message:"couldn't post.. insuficient data",error:error.message})
     }
 }
 
-export const askQues = async(req,res)=>{
+export const getQues = async(req,res)=>{
   try {
     const questionList =await Question.find();
     res.status(200).json(questionList);
@@ -26,11 +27,11 @@ export const askQues = async(req,res)=>{
 
 export const deleteQues = async (req,res)=>{
     try{
-        const {id:_id} = req.pharams;
+        const {id:_id} =await req.params;
         if(!mongoose.Types.ObjectId.isValid(_id)){
             return res.status(404).json({message:"question unavailable."})
         }
-        await Question.findByIdAndRemove(_id);
+        await Question.findByIdAndDelete(_id);
         res.status(200).json({message:"deleted successfully"});
     } catch (error){
         console.log(error.message);
@@ -39,8 +40,10 @@ export const deleteQues = async (req,res)=>{
 }
 
 export const voteQues = async (req,res)=>{
+    
     try {
-        const {id: _id} = req.params;
+        
+        const {id: _id} =await req.params;
         const {value} = req.body;
         const userId = req.userId;
         if(!mongoose.Types.ObjectId.isValid(_id)){
@@ -73,6 +76,7 @@ export const voteQues = async (req,res)=>{
         await Question.findByIdAndUpdate( _id, question );
         res.status(200).json({message:"Voted Successfully"})
      } catch (error) {
+        console.log(error)
      res.status(500).json({message:"id not found"})        
     }
 }

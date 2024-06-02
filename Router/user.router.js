@@ -11,7 +11,7 @@ const router =express.Router();
 //end point for signup and signin
 router.post("/signup",signup);
 router.post("/signin",signin)
-
+//end point router getallusers and update peofile
 router.get('/getAllUsers',getAllUsers)
 router.patch('/update/:id', auth,updateProfile)
 

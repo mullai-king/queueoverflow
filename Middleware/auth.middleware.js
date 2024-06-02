@@ -9,11 +9,10 @@ const auth =(req,res,next)=>{
     try {
         let decodeData =jwt.verify(token,process.env.JWT_SECRET_KEY);
         req.userId = decodeData?.id
-        //console.log(decodeData.id, req.userId)
         next()
     } catch (error) {
         console.log(error.message)
-        return res.status(500).json({message:"token auth error"});
+        return res.status(500).json(error.message);
     }
 }
 export default auth

@@ -1,8 +1,7 @@
 import Questions from "../Model/questionModel.js";
 import mongoose from "mongoose"
 
-
-export const postAnswer = async(req,res)=>{
+export const postAnswer = async(req, res) => {
     const { id: _id } = req.params;
     const { noOfAnswers, answerBody, userAnswered } = req.body;
     const userId = req.userId;
@@ -15,16 +14,17 @@ export const postAnswer = async(req,res)=>{
         const updatedQuestion = await Questions.findByIdAndUpdate( _id, { $addToSet: {'answer': [{ answerBody, userAnswered, userId }]}})
         res.status(200).json(updatedQuestion)
     } catch (error) {
-        res.status(400).json({message:"error in posting amswer"})
+        res.status(400).json('error in updating')
     }
-    const updateNoOfQuestions = async (_id, noOfAnswers) => {
-        try {
-            await Questions.findByIdAndUpdate( _id, { $set: { 'noOfAnswers' : noOfAnswers}})
-        } catch (error) {
-            console.log(error)
-        }
+}
+
+const updateNoOfQuestions = async (_id, noOfAnswers) => {
+    try {
+        await Questions.findByIdAndUpdate( _id, { $set: { 'noOfAnswers' : noOfAnswers}})
+    } catch (error) {
+        console.log(error)
     }
-} 
+}
 
 export const deleteAnswer = async ( req, res ) => {
     const { id:_id } = req.params;

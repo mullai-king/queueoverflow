@@ -31,7 +31,7 @@ export const updateProfile = async (req,res)=>{
         if (!updatedProfile) {
             return res.status(404).json({ msg: "Profile not found" });
         }
-        res.status(200).json(updatedProfile)
+        res.status(200).json({id:updatedProfile._id, name:updatedProfile.name, email:updatedProfile.email, about:updatedProfile.about, tags:updatedProfile.tags, joinedOn:updatedProfile.joinedOn})
     } catch (error) {
         console.log(error.message);
         res.status(500).json({msg:"internal server error"});

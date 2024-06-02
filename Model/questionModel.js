@@ -4,10 +4,10 @@ const QuestionSchema = mongoose.Schema({
     questionTitle:{type:String,required:"Question must have a tittle"},
     questionBody:{type:String,required:"Question must have a body"},
     questionTags:{type:[String],required:"Question must have a tag"},
+    userPosted:{type:String,required:"Question must have a author"},
     noOfAnswers:{type:Number,default:0},
     upVote:{type:[String],default:[]},
     downVote:{type:[String],default:[]},
-    userPosted:{type:String,required:"Question must have a author"},
     userId:{type:String},
     askedOn:{type:Date,default:Date.now},
     answer:[{
