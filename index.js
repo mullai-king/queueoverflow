@@ -20,8 +20,8 @@ app.use(cors())
 
 //routes 
 app.use("/user",userRouter);
-app.use("/question",quesRouter);
-app.use("/answer",ansRouter);
+app.use("/questions",quesRouter);
+app.use("/answers",ansRouter);
 
 
 //db connection

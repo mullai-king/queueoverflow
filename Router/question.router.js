@@ -7,9 +7,9 @@ import { askQues, deleteQues, getQues, voteQues } from "../Controller/question.c
 
 const router = express.Router();
 
-router.get("/get-ques",getQues);
-router.post("/ask-ques",auth,askQues);
-router.delete("/delete/:id",auth,deleteQues);
+router.get("/",getQues);
+router.post("/",auth,askQues);
+router.delete("/:id",auth,deleteQues);
 router.patch("/vote/:id",auth,voteQues);
 
 export default router;

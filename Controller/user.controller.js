@@ -11,18 +11,18 @@ export const signup = async (req,res)=>{
         //check user already exist
         const existUser = await user.findOne({email})
         if(existUser){
-            return res.status(404).json({message:"user already exist."});
+            return res.status(400).json({ message: "Email already registered" });
         }
         
         const hashPassword = await bcrypt.hash(password,12);
         //create new user
         const newUser =await user.create({name,email,password:hashPassword});
         const token = jwt.sign({email:newUser.email,id:newUser._id},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
-        res.status(201).json({result:newUser,token});
+        res.status(200).json({data:newUser,token});
 
    } catch (error) {
-        res.status(500).json({message:"internal server error"});
-        console.log(error.message)
+        res.status(500).json({ error: "Something went wrong" })
+        // console.log(error.message)
    }
 }
 //signin controller
@@ -34,16 +34,16 @@ export const signin =async(req,res)=>{
         const existUser = await user.findOne({email});
         //console.log(existUser);
         if(!existUser){
-            return res.status(404).json({msg:"no account found"})
+            return res.status(400).json({ message: "User doesn't exist" });
         }
         const passwordCorrect =await bcrypt.compare(password,existUser.password);
         if(!passwordCorrect){
-            return res.status(400).json({msg:"Invalid password"})
+            return res.status(400).json({ message: "Password Wrong" })
         }
         const token = jwt.sign({email:existUser.email,id:existUser._id},process.env.JWT_SECRET_KEY,{expiresIn:"1h"});
-        res.status(200).json({result:existUser,token})
+        res.status(200).json({data:existUser,token})
     } catch (error) {
-        res.status(500).json({message:"internal server error"});
-        console.log(error.message)
+        res.status(500).json({ error: "Something went wrong" })
+        // console.log(error.message)
     }
 }
